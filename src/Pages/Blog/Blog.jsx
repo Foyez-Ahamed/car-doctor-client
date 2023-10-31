@@ -3,7 +3,8 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import Footer from "../Shared/Footer/Footer";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import axios from "axios";
+// import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Blog = () => {
 
@@ -11,21 +12,30 @@ const Blog = () => {
 
     const [orders, setOrders] = useState([]);
 
-    const uri = `http://localhost:5000/orders?email=${user.email}`
+    const axiosSecure = useAxiosSecure();
+
+    // const url = `https://y-seven-plum.vercel.app/orders?email=${user.email}`
+
+    const url = `/orders?email=${user.email}`
 
     useEffect( () => {
-
       // axios data load // 
-      axios.get(uri, {withCredentials: true})
-      .then(res => {
-        setOrders(res.data)
-      })
+      // axios.get(url, {withCredentials: true} )
+      // .then(res => {
+      //   setOrders(res.data)
+      // })
 
       // normal data load //
         // fetch(uri)
         // .then(res => res.json())
         // .then(data => setOrders(data))
-    } ,[uri])
+
+        // base url axios // 
+
+        axiosSecure.get(url)
+        .then(res => setOrders(res.data))
+
+    } ,[url, axiosSecure])
 
     const handleDelete = (id) => {
 
@@ -40,7 +50,7 @@ const Blog = () => {
           }).then((result) => {
             if (result.isConfirmed) {
       
-              fetch(`http://localhost:5000/orders/${id}`, {
+              fetch(`https://y-seven-plum.vercel.app/orders/${id}`, {
                 method: "DELETE",
               })
                 .then((res) => res.json())
@@ -61,7 +71,7 @@ const Blog = () => {
 
     const handleOrderUpdate = id => {
 
-        fetch(`http://localhost:5000/orders/${id}` , {
+        fetch(`https://y-seven-plum.vercel.app/orders/${id}` , {
             method:'PATCH',
             headers: {
                 'content-type' : 'application/json'

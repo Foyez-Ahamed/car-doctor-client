@@ -2,14 +2,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import signUp from "../../assets/images/login/login.svg"
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
-import { useContext } from "react";
-import { AuthContext } from "../../Provider/AuthProvider";
-import axios from "axios";
+import useAuth from "../../hooks/useAuth";
+// import { useContext } from "react";
+// import { AuthContext } from "../../Provider/AuthProvider";
 
 
 const SignIn = () => {
 
-     const {userSignIn} = useContext(AuthContext);
+    //  const {userSignIn} = useContext(AuthContext);
+
+    const {userSignIn} = useAuth();
 
      const location = useLocation();
 
@@ -25,28 +27,14 @@ const SignIn = () => {
        const password = form.password.value;
 
        userSignIn(email, password)
-       .then(result => {
-        // console.log(result.user);
-        
-        
-        const loggedUser = result.user;
-        console.log(loggedUser);
-
-        const user = { email }
-
-        axios.post('http://localhost:5000/jwt', user, {withCredentials: true})
-        .then(res => {
-          console.log(res.data);
-
-          if(res.data.success){
-            navigate(location?.state ? location.state : '/')
-          }
-        })
-
+       .then(() => {
+        // const loggedUser = result.user;
+        // console.log(loggedUser);
+        navigate(location?.state ? location.state : '/')
        })
-       .catch(error => {
-        console.log(error.message);
-       })
+
+       .catch()
+       
      }
 
     return (

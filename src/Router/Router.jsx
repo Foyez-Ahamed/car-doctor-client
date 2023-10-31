@@ -40,7 +40,7 @@ const MyCreatedRouter = createBrowserRouter([
             {
                 path:'/checkout/:id',
                 element: <PrivateRoute><Checkout></Checkout></PrivateRoute>,
-                loader: ({params}) => fetch(`http://localhost:5000/services/${params.id}`)
+                loader: ({params}) => fetch(`https://y-seven-plum.vercel.app/services/${params.id}`)
             },
 
             {

@@ -3,6 +3,7 @@ import Footer from "../../Pages/Shared/Footer/Footer";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 // import checkout from "../../assets/images/checkout/checkout.png";
 
 const Checkout = () => {
@@ -38,7 +39,7 @@ const Checkout = () => {
       
     }
     
-    fetch('http://localhost:5000/orders', {
+    fetch('https://y-seven-plum.vercel.app/orders', {
       method: 'POST',
       headers: {
         'content-type' : 'application/json'
@@ -50,7 +51,11 @@ const Checkout = () => {
       console.log(data);
 
       if( data.insertedId > 0) {
-        toast.success('Ordered confirmed successfully');
+        Swal.fire(
+          'Thanks!',
+          'Order confirm successfully',
+          'success'
+        )
       }
     })
 
